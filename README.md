@@ -4,15 +4,28 @@ The `objcount.py` is a program written to review a number of statistics for spec
 
 It attempts to test specific use cases which are known to be problematic in Cassandra 4.x
 
-# Usage
+# Install
+After cloning the repository, run
+`$ pip install -r requirements.txt`
 
+# Usage
+It is mandatory to define the `dcname` in the `conf_dummy.ini` at minimum using one of the datacenter name of the Cassandra cluster.
+
+Example use:
 ```
-usage: objcount.py [-h] -i HOST -k KEYSPACE [-t TABLE] [-f FETCH] [-d DEBUG]
+$ python3 ./objcount.py -c conf_dummy.ini -i 10.1.2.3 -k test
+```
+
+Full usage info:
+```
+$ python3 objcount.py -h
+usage: objcount.py [-h] -c CONF -i HOST -k KEYSPACE [-t TABLE] [-f FETCH] [-d DEBUG]
 
 Statistics script
 
 optional arguments:
   -h, --help            show this help message and exit
+  -c CONF, --conf CONF  Configuration file to connect
   -i HOST, --host HOST  IP address for Cassandra
   -k KEYSPACE, --keyspace KEYSPACE
                         Keyspace to query
@@ -23,6 +36,8 @@ optional arguments:
   -d DEBUG, --debug DEBUG
                         debug file
 ```
+
+Note: the conf file contains a number of elements that can be set for authentication (username/password) and 1-way SSL (Provide path to the Root Certificate Authority public certificate) to connect to Cassandra
 
 # Information
 ---
