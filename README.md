@@ -1,8 +1,7 @@
-README
+# Introduction
 
 The `objcount.py` is a program written to review a number of statistics for specific queries in Cassandra.
-
-It attempts to test specific use cases which are known to be problematic in Cassandra 4.x
+It attempts to test specific use cases which can be problematic in Cassandra 4.x and requiring tweaking
 
 # Install
 After cloning the repository, run
@@ -40,7 +39,7 @@ optional arguments:
 Note: the conf file contains a number of elements that can be set for authentication (username/password) and 1-way SSL (Provide path to the Root Certificate Authority public certificate) to connect to Cassandra
 
 # Information
----
+
 ## Scenario 1. Unbound queries
 
 In case of a select without a where clause, DSE and Cassandra will run a "range" query which is a scatter and gather data accross the cluster
@@ -60,7 +59,6 @@ Solutions:
 
 See the [Messaging documentation and resource limits](https://cassandra.apache.org/doc/4.0/cassandra/new/messaging.html#resource-limits-on-queued-messages)
 
----
 ## Scenario 2. Select count time-outs
 
 The issue is described below:
