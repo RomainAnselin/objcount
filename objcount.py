@@ -187,7 +187,7 @@ def main():
 
     profile = ExecutionProfile(
         # load_balancing_policy=RoundRobinPolicy(),
-        request_timeout=5
+        request_timeout=10
     )
 
     profile_long = ExecutionProfile(
