@@ -96,28 +96,28 @@ Count timing with fetch 5000: 0:00:14.189955
 ```
 
 ## SELECT section
-In the above example, the SELECT section shows that retrieving the 100 000 records from the table via `SELECT key, blob FROM` took 24s. With an average blob size at 10kb.
+In the above example, the SELECT section shows that retrieving the 100 000 records from the table via `SELECT key, blob FROM` took 24s. With an average blob size at 10kb.<br>
 Note the "count" in this output is an iteration counter in the application of the rows retrieved and **not** a `SELECT COUNT`
 
-The fetch is at default 5000. 
-The formula `number of rows / fetch_size = number of pages`
-`100 000 / 5 000 = 20` so 20 pages retrieved. 
-The query took 24 seconds to execute and would not time-out, as each page was retrieved in `execution time / number of pages = time to read a page` 
-`24/20 = 1.02` which means the round trip for  each page is around ~1.02s (careful, this is an average, with dummy data, and even data with unique row per partition). 
-** It is that value that matters in regards to the timeouts of DSE/C\* **
+The fetch is at default 5000.<br> 
+The formula `number of rows / fetch_size = number of pages`<br>
+`100 000 / 5 000 = 20` so 20 pages retrieved.<br>
+The query took 24 seconds to execute and would not time-out, as each page was retrieved in `execution time / number of pages = time to read a page`<br>
+`24/20 = 1.02` which means the round trip for  each page is around ~1.02s (careful, this is an average, with dummy data, and even data with unique row per partition).<br>
+**It is that value that matters in regards to the timeouts of DSE/C\***<br>
 
-We can also define that the payload is `fetch_size * average row size` for a page, and `row_count * average row size` for the full query payload.
-Here the page size is `5 000 * 10 0000 = 50 000 000` or around 50Mb
-The query payload is `100 000 * 10 0000 = 1 000 000 000` or around 1Gb
+We can also define that the payload is `fetch_size * average row size` for a page, and `row_count * average row size` for the full query payload.<br>
+Here the page size is `5 000 * 10 0000 = 50 000 000` or 50Mb.<br>
+The query payload is `100 000 * 10 0000 = 1 000 000 000` or 1Gb.<br>
 
-The **page size** is what affects the requirement for tweaking the `internode_application_` parameters in Cassandra 4.x
+The **page size** is what affects the requirement for tweaking the `internode_application_` parameters in Cassandra 4.x<br>
 
 ## COUNT section
 When running the count, 3 information are output here:
 - The trace_id - which was part of the debug info to generate CASSANDRA-19949
 - The output of row count based on SELECT COUNT
-- The execution time
-It is important to understand that this query is solely executed at coordinator level before the count is fetch back to the application.
-This, with the default parameters of `range_request_timeout_in_ms` (10s in C* 4.0) and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.
+- The execution time<br>
+It is important to understand that this query is solely executed at coordinator level before the count is fetch back to the application.<br>
+This, with the default parameters of `range_request_timeout_in_ms` (10s in C* 4.0) and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.<br>
 
-For this scenario, review both the `range_request_timeout` on C* and the driver query timeout to allow the query to succeed - until hopefully a fix for the Cassandra JIRA referenced
+For this scenario, review both the `range_request_timeout` on C* and the driver query timeout to allow the query to succeed - until hopefully a fix for the Cassandra JIRA referenced.
