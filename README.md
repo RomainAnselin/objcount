@@ -64,8 +64,8 @@ See the [Messaging documentation and resource limits](https://cassandra.apache.o
 The issue is described below:
 [CASSANDRA-19949](https://issues.apache.org/jira/browse/CASSANDRA-19949)
 
-Objcount.py will run a select count query after scenario 1. This is handled at coordinator level and differs from the first scenario, in that fetch size won't help.
-Cassandra 4.x has a performance problem which exhibit a 6 to 7 times slower execution time.
+`objcount.py` will run a **select count** query in this second scenario. This type of query is handled at coordinator level and differs from the first scenario, in that fetch_size won't help.
+Cassandra 4.x has a performance problem which exhibit a 6 to 7 times slower execution time compared to 3.11 at the time this tool is written.
 
 This requires an increase in the `range_request_timeout_in_ms` in Apach Cassandra ™️ 4.0, along a driver timeout change on the client
 
