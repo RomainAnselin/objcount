@@ -100,8 +100,8 @@ In the above example, the SELECT section shows that retrieving the 100 000 recor
 Note the "count" in this output is an iteration counter in the application of the rows retrieved and **not** a `SELECT COUNT`
 
 The fetch is at default 5000.<br> 
-The formula `number of rows / fetch_size = number of pages`<br>
-`100 000 / 5 000 = 20` so 20 pages retrieved.<br>
+The formula to calculate the number of pages is: `number of rows / fetch size = number of pages`<br>
+Here, `100 000 / 5 000 = 20` so we have 20 pages retrieved in this example.<br>
 The query took 24 seconds to execute and would not time-out, as each page was retrieved in `execution time / number of pages = time to read a page`<br>
 `24/20 = 1.02` which means the round trip for  each page is around ~1.02s (careful, this is an average, with dummy data, and even data with unique row per partition).<br>
 **It is that value that matters in regards to the timeouts of DSE/C\***<br>
