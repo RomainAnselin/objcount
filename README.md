@@ -77,7 +77,7 @@ Uncomment **in a test environment only** the `gateway_insert()` around line 155 
 
 # Example output and interpretation
 
-On a 3 nodes cluster with RF3, with the queries are executed by the client on a machine in the same network at LOCAL_QUORUM:
+On a 3 nodes cluster with RF3, with the queries executed by the client on a machine in the same network at LOCAL_QUORUM:
 
 ```
 $ python3 ./objcount.py -c conf_dummy.ini -i 10.1.2.3 -k test -t count_perf
