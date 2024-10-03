@@ -123,4 +123,4 @@ It is important to understand that this query is solely executed at coordinator 
 
 This, with the default parameters of `range_request_timeout_in_ms` - default at 10s in C* 4.0 - and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.<br>
 
-For this scenario, review both the `range_request_timeout` on C* and the driver query timeout to allow the query to succeed - until hopefully a fix for the Cassandra JIRA referenced.
+For this scenario, review both the `range_request_timeout` on C* and the driver query timeout to allow the query to succeed - until  a fix for the Cassandra JIRA referenced is released.
