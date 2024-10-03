@@ -111,14 +111,16 @@ Here the page size is `5 000 * 10 0000 = 50 000 000` or 50Mb.<br>
 The query payload is `100 000 * 10 0000 = 1 000 000 000` or 1Gb.<br>
 
 The **page size** is what affects the requirement for tweaking the `internode_application_` parameters in Cassandra 4.x<br>
+Consider prior to this if the `fetch_size` can be reduced on the driver side.<br>
 
 ## COUNT section
 When running the count, 3 information are output here:
 - The trace_id - which was part of the debug info to generate CASSANDRA-19949
 - The output of row count based on SELECT COUNT
 - The execution time<br>
-<br>
-It is important to understand that this query is solely executed at coordinator level before the count is fetch back to the application.<br>
-This, with the default parameters of `range_request_timeout_in_ms` (10s in C* 4.0) and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.<br>
+
+It is important to understand that this query is solely executed at coordinator level before the count result is fetch back to the application.<br>
+
+This, with the default parameters of `range_request_timeout_in_ms` - default at 10s in C* 4.0 - and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.<br>
 
 For this scenario, review both the `range_request_timeout` on C* and the driver query timeout to allow the query to succeed - until hopefully a fix for the Cassandra JIRA referenced.
