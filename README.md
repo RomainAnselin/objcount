@@ -101,7 +101,7 @@ Note the "count" in this output is an iteration counter in the application of th
 
 The fetch is at default 5000.<br> 
 The formula to calculate the number of pages is: `number of rows / fetch size = number of pages`<br>
-Here, `100 000 / 5 000 = 20` so we have 20 pages retrieved in this example.<br>
+In this scenario, `100 000 / 5 000 = 20` so we have 20 pages retrieved in this example.<br>
 The query took 24 seconds to execute and would not time-out, as each page was retrieved in `execution time / number of pages = time to read a page`<br>
 `24/20 = 1.02` which means the round trip for  each page is around ~1.02s (careful, this is an average, with dummy data, and even data with unique row per partition).<br>
 **It is that value that matters in regards to the timeouts of DSE/C\***<br>
@@ -117,6 +117,7 @@ When running the count, 3 information are output here:
 - The trace_id - which was part of the debug info to generate CASSANDRA-19949
 - The output of row count based on SELECT COUNT
 - The execution time<br>
+<br>
 It is important to understand that this query is solely executed at coordinator level before the count is fetch back to the application.<br>
 This, with the default parameters of `range_request_timeout_in_ms` (10s in C* 4.0) and the python driver default timeout (10s as well) means this query would fail under normal condition as it takes 14s with this example. And so regardless of `fetch_size` in the driver.<br>
 

@@ -17,7 +17,7 @@ from cassandra.policies import (
 
 def arguments():
     parser = argparse.ArgumentParser(description='Statistics script')
-    parser.add_argument('-c', '--conf', type=str, required=True, help="Configuration file to connect", default='conf_dummy.ini')
+    parser.add_argument('-c', '--conf', type=str, required=False, help="Configuration file to connect", default='conf_dummy.ini')
     parser.add_argument('-i', '--host', type=str, required=True, help="IP address for Cassandra")
     parser.add_argument('-k', '--keyspace', type=str, required=True, help="Keyspace to query")
     parser.add_argument('-t', '--table', type=str, required=False, help="Table to query - defaults to count_perf", default='count_perf')
@@ -162,9 +162,9 @@ def calculate_row_statistics(row_sizes):
 def main():
     host, ks, tbl, fetch, debug_file, conf_file = arguments()
 
-    # connection_params = {
-    #     [host], port=9042, execution_profiles={EXEC_PROFILE_DEFAULT: profile, 'long': profile_long}
-    # }
+    ### Doesn't work as the default value is defined as conf_dummy.ini
+    # if conf_file == 'conf_dummy.ini':
+    #     print("INFO: Default configuration file used. Using conf_dummy and assuming there's no authentication or SSL")
 
     config = read_config(conf_file)
     dcname = config['general']['dcname']
